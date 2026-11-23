@@ -1,0 +1,645 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Teste Rápido de Hábitos e Rotina</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            cream: '#FAF9F6',
+            forest: '#1B4332',
+            'forest-light': '#2D6A4F',
+            'lime-accent': '#84CC16',
+            gold: '#D4AF37',
+          }
+        }
+      }
+    }
+  </script>
+<style data-purpose="transitions">
+    .screen-fade-in {
+      animation: fadeInSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .screen-fade-out {
+      animation: fadeOutSlide 0.22s ease-in forwards;
+    }
+    @keyframes fadeInSlide {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes fadeOutSlide {
+      from {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+<style data-purpose="analysis-loader">
+    .spinner-ring {
+      border: 4px solid rgba(27, 67, 50, 0.12);
+      border-top-color: #1B4332;
+      border-right-color: #84CC16;
+      border-bottom-color: #D4AF37;
+      border-radius: 9999px;
+      animation: spin 1.1s linear infinite;
+    }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+<style data-purpose="mobile-result-cta">
+    @media (max-width: 639px) {
+      .result-safe-area {
+        padding-bottom: 6.5rem;
+      }
+    }
+  </style>
+</head>
+<body class="bg-cream text-slate-900 antialiased selection:bg-lime-accent/30 selection:text-forest">
+<!-- BEGIN: MainQuizContainer -->
+<main class="mx-auto flex min-h-screen w-full max-w-[600px] flex-col justify-between px-5 py-6 sm:px-6 sm:py-8" data-purpose="quiz-viewport" id="quiz-app">
+<!-- BEGIN: IntroScreen -->
+<section class="flex flex-1 flex-col justify-between" data-purpose="intro-screen" id="screen-intro">
+<div class="flex-1 flex flex-col justify-center py-10">
+<span class="mb-6 inline-flex w-fit items-center rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 text-xs font-extrabold tracking-wider text-forest uppercase">
+          Teste rápido • Menos de 2 minutos
+        </span>
+<h1 class="mb-5 text-3xl font-extrabold leading-tight text-forest sm:text-4xl">
+          Descubra qual hábito pode estar impedindo você de ter uma rotina mais equilibrada
+        </h1>
+<p class="mb-8 text-base leading-relaxed text-slate-600 sm:text-lg">
+          Responda 10 perguntas rápidas e receba uma recomendação personalizada para o seu momento.
+        </p>
+<ul class="mb-10 flex flex-col gap-3" aria-label="Benefícios do teste">
+<li class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-bold text-slate-800 shadow-sm">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-lime-accent/25 text-forest">✓</span>
+            Rápido e simples
+          </li>
+<li class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-bold text-slate-800 shadow-sm">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-lime-accent/25 text-forest">✓</span>
+            Resultado personalizado
+          </li>
+<li class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-bold text-slate-800 shadow-sm">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-lime-accent/25 text-forest">✓</span>
+            Foco em hábitos possíveis
+          </li>
+</ul>
+<button class="w-full rounded-2xl bg-forest px-6 py-4 text-lg font-extrabold text-white shadow-lg shadow-forest/20 transition-all hover:bg-forest-light active:scale-[0.98]" id="btn-start-quiz" type="button">
+          Começar meu teste
+        </button>
+<p class="mt-4 text-center text-xs leading-relaxed text-slate-400">
+          Questionário informativo sobre hábitos e bem-estar.
+        </p>
+</div>
+</section>
+<!-- END: IntroScreen -->
+<!-- BEGIN: Screen1to10_Questions (Active First Screen) -->
+<section class="hidden flex-1 flex-col justify-between" data-purpose="question-screen" id="screen-question">
+<!-- Top navigation & progress bar -->
+<div class="w-full">
+<div class="mb-3 flex items-center justify-between">
+<button aria-label="Voltar para a pergunta anterior" class="invisible inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-200/60 hover:text-forest" id="btn-back" type="button">
+<svg aria-hidden="true" class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+<path d="M15 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"></path>
+</svg>
+            Voltar
+          </button>
+<span class="text-xs font-bold tracking-wide text-forest uppercase" id="question-step-label">Etapa 1 de 10</span>
+</div>
+<!-- Progress bar -->
+<div class="h-2 w-full overflow-hidden rounded-full bg-slate-200">
+<div class="h-full rounded-full bg-gradient-to-r from-forest via-lime-accent to-gold transition-all duration-300 ease-out" id="quiz-progress-bar" style="width: 10%;"></div>
+</div>
+</div>
+<!-- Question & Options container -->
+<div class="my-auto py-6 screen-fade-in" id="question-content">
+<h2 class="mb-6 text-xl font-extrabold leading-snug text-forest sm:text-2xl" id="question-title">Qual é a sua faixa etária?</h2>
+<div aria-labelledby="question-title" class="flex flex-col gap-3" id="question-options" role="radiogroup">
+<button aria-checked="false" class="w-full text-left rounded-2xl border-2 px-5 py-4 text-base font-semibold transition-all duration-150 flex items-center justify-between gap-3 active:scale-[0.99] border-slate-200 bg-white text-slate-800 hover:border-forest/40 hover:bg-slate-50" role="radio" type="button">
+<span class="flex items-center gap-2.5"><span>🌱</span> 18 a 29 anos</span>
+<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-slate-300 transition-colors"></span>
+</button>
+<button aria-checked="false" class="w-full text-left rounded-2xl border-2 px-5 py-4 text-base font-semibold transition-all duration-150 flex items-center justify-between gap-3 active:scale-[0.99] border-slate-200 bg-white text-slate-800 hover:border-forest/40 hover:bg-slate-50" role="radio" type="button">
+<span class="flex items-center gap-2.5"><span>🌿</span> 30 a 39 anos</span>
+<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-slate-300 transition-colors"></span>
+</button>
+<button aria-checked="false" class="w-full text-left rounded-2xl border-2 px-5 py-4 text-base font-semibold transition-all duration-150 flex items-center justify-between gap-3 active:scale-[0.99] border-slate-200 bg-white text-slate-800 hover:border-forest/40 hover:bg-slate-50" role="radio" type="button">
+<span class="flex items-center gap-2.5"><span>✨</span> 40 a 49 anos</span>
+<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-slate-300 transition-colors"></span>
+</button>
+<button aria-checked="false" class="w-full text-left rounded-2xl border-2 px-5 py-4 text-base font-semibold transition-all duration-150 flex items-center justify-between gap-3 active:scale-[0.99] border-slate-200 bg-white text-slate-800 hover:border-forest/40 hover:bg-slate-50" role="radio" type="button">
+<span class="flex items-center gap-2.5"><span>⭐</span> 50 anos ou mais</span>
+<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-slate-300 transition-colors"></span>
+</button>
+</div>
+</div>
+<!-- Bottom spacer for visual balance -->
+<div class="h-4"></div>
+</section>
+<!-- END: Screen1to10_Questions -->
+<!-- BEGIN: Screen11_Analysis -->
+<section class="my-auto flex-col items-center text-center hidden" data-purpose="analysis-screen" id="screen-analysis">
+<div class="spinner-ring mb-6 h-16 w-16"></div>
+<h2 class="mb-3 text-xl font-bold text-forest sm:text-2xl" id="analysis-status-text">Analisando suas respostas…</h2>
+<p class="mb-6 text-sm text-slate-500">
+        Aguarde um instante enquanto organizamos seu perfil.
+      </p>
+<!-- Animated progress bar -->
+<div class="h-2 w-full max-w-xs overflow-hidden rounded-full bg-slate-200">
+<div class="h-full w-0 rounded-full bg-gradient-to-r from-forest via-lime-accent to-gold transition-all duration-[2400ms] ease-out" id="analysis-progress-bar"></div>
+</div>
+</section>
+<!-- END: Screen11_Analysis -->
+<!-- BEGIN: Screen12_ResultAndOffer -->
+<section class="result-safe-area flex-col gap-8 pb-8 hidden" data-purpose="result-and-offer-screen" id="screen-result">
+<!-- Result Profile Card -->
+<div class="rounded-2xl border border-forest/15 bg-white p-6 shadow-sm">
+<span class="mb-3 inline-block rounded-full bg-lime-accent/20 px-3 py-1 text-xs font-bold tracking-wider text-forest uppercase">
+          Seu Resultado
+        </span>
+<h2 class="mb-3 text-2xl font-extrabold leading-tight text-forest" id="result-title">Seu próximo passo é criar uma base simples e possível</h2>
+<p class="mb-5 text-base leading-relaxed text-slate-600" id="result-text">Suas respostas indicam que pequenas ações consistentes podem ajudar você a organizar melhor sua rotina.</p>
+<div class="rounded-xl bg-cream p-4">
+<p class="mb-3 text-xs font-bold tracking-wider text-slate-500 uppercase">
+            Suas 3 prioridades agora:
+          </p>
+<ul class="flex flex-col gap-2.5" id="result-priorities">
+<li class="flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest text-xs text-white">✓</span>
+<span>Recomeçar com metas simples</span>
+</li>
+<li class="flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest text-xs text-white">✓</span>
+<span>Criar constância sem radicalismo</span>
+</li>
+<li class="flex items-center gap-2.5 text-sm font-semibold text-slate-800">
+<span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest text-xs text-white">✓</span>
+<span>Organizar hábitos do dia a dia</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Product Offer Section -->
+<div class="flex flex-col gap-5" data-purpose="product-offer">
+<div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+<img alt="Metabólico 20 — Vida Saudável e Longevidade" class="h-auto w-full object-cover" src="assets/metabolico-20.png">
+</div>
+<div class="text-center">
+<span class="mb-2 inline-block rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1 text-xs font-bold tracking-wider text-forest uppercase">
+            PLANO RECOMENDADO PARA O SEU MOMENTO
+          </span>
+<h3 class="mb-2 text-2xl font-extrabold text-forest sm:text-3xl">
+            Conheça o Metabólico 20
+          </h3>
+<p class="text-base leading-relaxed text-slate-600">
+            Um programa prático para ajudar você a transformar intenção em uma rotina mais consciente, ativa e sustentável.
+          </p>
+</div>
+<!-- Short benefits -->
+<ul class="flex flex-col gap-2.5 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
+<li class="flex items-center gap-3 text-sm font-semibold text-slate-800">
+<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-accent/25 text-forest">✓</span>
+            Estratégias práticas para o dia a dia
+          </li>
+<li class="flex items-center gap-3 text-sm font-semibold text-slate-800">
+<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-accent/25 text-forest">✓</span>
+            Rotina organizada por etapas
+          </li>
+<li class="flex items-center gap-3 text-sm font-semibold text-slate-800">
+<span class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-lime-accent/25 text-forest">✓</span>
+            Conteúdo para aplicar no seu ritmo
+          </li>
+</ul>
+<!-- Special Condition Card -->
+<div class="rounded-2xl border-2 border-gold bg-white p-6 shadow-md" data-purpose="special-condition-card">
+<h4 class="mb-4 text-center text-lg font-extrabold text-forest">
+            Acesso ao Metabólico 20
+          </h4>
+<!-- Pricing block -->
+<div class="mb-5 rounded-xl bg-cream p-4 text-center">
+<p class="text-sm text-slate-500 line-through">De R$ 150,57</p>
+<p class="my-1 text-3xl font-extrabold text-forest">Por R$ 15,99</p>
+<p class="text-sm font-semibold text-slate-700">Pagamento seguro no checkout</p>
+</div>
+<!-- Bonuses -->
+<div class="mb-5 border-t border-slate-100 pt-4">
+<p class="mb-2.5 text-sm font-bold text-forest">
+              Seu acesso também inclui:
+            </p>
+<ul class="flex flex-col gap-2 text-sm text-slate-700">
+<li class="flex items-start justify-between gap-2.5 rounded-lg border border-slate-100 bg-cream/70 p-2.5">
+<div class="flex items-start gap-2"><span class="mt-0.5 text-gold font-bold">★</span><div><p class="text-xs font-bold uppercase tracking-wider text-forest">Bônus 1</p><p class="text-sm font-semibold text-slate-800">Planilha Inteligente de Rotina e Organização Metabólica</p></div></div>
+</li>
+<li class="flex items-start justify-between gap-2.5 rounded-lg border border-slate-100 bg-cream/70 p-2.5">
+<div class="flex items-start gap-2"><span class="mt-0.5 text-gold font-bold">★</span><div><p class="text-xs font-bold uppercase tracking-wider text-forest">Bônus 2</p><p class="text-sm font-semibold text-slate-800">Guia Prático de Marmitas e Shots Matinais Aceleradores</p></div></div>
+</li>
+<li class="flex items-start justify-between gap-2.5 rounded-lg border border-slate-100 bg-cream/70 p-2.5">
+<div class="flex items-start gap-2"><span class="mt-0.5 text-gold font-bold">★</span><div><p class="text-xs font-bold uppercase tracking-wider text-forest">Bônus 3</p><p class="text-sm font-semibold text-slate-800">Planner Semanal de Hidratação, Movimento e Sono Reparador</p></div></div>
+</li>
+</ul>
+</div>
+<!-- Main CTA -->
+<a class="block w-full rounded-2xl bg-forest px-6 py-4 text-center text-lg font-bold text-white shadow-lg shadow-forest/20 transition-all hover:bg-forest-light active:scale-[0.98]" href="https://pay.cakto.com.br/4ozvhdi_1024505" target="_blank">
+            Quero garantir meu acesso
+          </a>
+<p class="mt-3 text-center text-xs font-medium text-slate-500">
+            Compra segura • Acesso online • Comece no seu ritmo
+          </p>
+</div>
+</div>
+<!-- Mobile sticky CTA, visible only after the quiz result -->
+<div class="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 px-5 py-3 shadow-[0_-8px_24px_rgba(15,23,42,0.10)] backdrop-blur sm:hidden">
+<a class="mx-auto block w-full max-w-[560px] rounded-2xl bg-forest px-5 py-3.5 text-center text-base font-extrabold text-white shadow-lg shadow-forest/20 transition-all active:scale-[0.98]" href="https://pay.cakto.com.br/4ozvhdi_1024505" target="_blank">
+            Quero garantir meu acesso
+          </a>
+</div>
+<!-- Discrete Footer -->
+<footer class="mt-2 border-t border-slate-200/80 pt-5 text-center text-xs leading-relaxed text-slate-400">
+<p>Este questionário tem caráter informativo e não substitui orientação de profissionais de saúde.</p>
+<p class="mt-1">Resultados variam conforme rotina, contexto e adesão individual.</p>
+</footer>
+</section>
+<!-- END: Screen12_ResultAndOffer -->
+</main>
+<!-- END: MainQuizContainer -->
+<!-- BEGIN: QuizDataScript -->
+<script data-purpose="quiz-data">
+    const QUIZ_QUESTIONS = [
+      {
+        question: "Qual é a sua faixa etária?",
+        options: [
+          { label: "18 a 29 anos", emoji: "🌱", score: 2 },
+          { label: "30 a 39 anos", emoji: "🌿", score: 2 },
+          { label: "40 a 49 anos", emoji: "✨", score: 2 },
+          { label: "50 anos ou mais", emoji: "⭐", score: 2 }
+        ]
+      },
+      {
+        question: "O que você mais gostaria de melhorar neste momento?",
+        options: [
+          { label: "Ter mais energia no dia a dia", emoji: "⚡", score: 1 },
+          { label: "Organizar melhor minha alimentação", emoji: "🥗", score: 2 },
+          { label: "Voltar a me movimentar com constância", emoji: "🏃‍♀️", score: 2 },
+          { label: "Cuidar melhor da minha rotina", emoji: "🗓️", score: 3 }
+        ]
+      },
+      {
+        question: "Como você descreveria sua rotina atualmente?",
+        options: [
+          { label: "Muito corrida e imprevisível", emoji: "🌪️", score: 1 },
+          { label: "Tenho dificuldade em manter horários", emoji: "⏰", score: 1 },
+          { label: "Consigo me organizar em alguns dias", emoji: "⚖️", score: 2 },
+          { label: "Tenho uma rotina relativamente estável", emoji: "🧘‍♀️", score: 3 }
+        ]
+      },
+      {
+        question: "Como têm sido suas escolhas alimentares na maior parte da semana?",
+        options: [
+          { label: "Acabo escolhendo o que é mais prático", emoji: "🥪", score: 1 },
+          { label: "Tenho dificuldade em manter horários", emoji: "⏳", score: 1 },
+          { label: "Já faço boas escolhas, mas sem constância", emoji: "🍎", score: 2 },
+          { label: "Sinto que estou no caminho certo", emoji: "🥑", score: 3 }
+        ]
+      },
+      {
+        question: "Como está sua hidratação ao longo do dia?",
+        options: [
+          { label: "Quase sempre esqueço de beber água", emoji: "💧", score: 1 },
+          { label: "Bebo água, mas poderia melhorar", emoji: "🥤", score: 2 },
+          { label: "Tenho uma boa rotina de hidratação", emoji: "🚰", score: 3 },
+          { label: "Hidratação já é um hábito para mim", emoji: "🌊", score: 3 }
+        ]
+      },
+      {
+        question: "Quanto movimento faz parte da sua semana?",
+        options: [
+          { label: "Quase nenhum no momento", emoji: "🛋️", score: 1 },
+          { label: "Caminho ou me movimento às vezes", emoji: "🚶‍♂️", score: 2 },
+          { label: "Faço exercícios 2 a 3 vezes por semana", emoji: "💪", score: 3 },
+          { label: "Tenho uma rotina ativa na maior parte da semana", emoji: "🔥", score: 3 }
+        ]
+      },
+      {
+        question: "Como você costuma se sentir ao longo do dia?",
+        options: [
+          { label: "Minha energia oscila bastante", emoji: "📉", score: 1 },
+          { label: "Perco o ritmo no meio do dia", emoji: "🥱", score: 1 },
+          { label: "Geralmente tenho boa disposição", emoji: "☀️", score: 2 },
+          { label: "Tenho energia, mas quero otimizar minha rotina", emoji: "🚀", score: 3 }
+        ]
+      },
+      {
+        question: "Como está a qualidade do seu descanso?",
+        options: [
+          { label: "Meu sono é irregular", emoji: "🌙", score: 1 },
+          { label: "Durmo, mas acordo sem tanta disposição", emoji: "🛌", score: 2 },
+          { label: "Meu descanso é razoável", emoji: "🌤️", score: 2 },
+          { label: "Tenho uma boa rotina de sono", emoji: "✨", score: 3 }
+        ]
+      },
+      {
+        question: "Qual é seu maior desafio para manter hábitos saudáveis?",
+        options: [
+          { label: "Falta de tempo", emoji: "⏱️", score: 1 },
+          { label: "Falta de constância", emoji: "🔁", score: 2 },
+          { label: "Não saber por onde começar", emoji: "🧭", score: 1 },
+          { label: "Manter a motivação", emoji: "🎯", score: 2 }
+        ]
+      },
+      {
+        question: "Quanto você está disposto(a) a cuidar da sua rotina nos próximos dias?",
+        options: [
+          { label: "1 — Quero começar devagar", emoji: "🌱", score: 1 },
+          { label: "2 — Estou pensando em mudar", emoji: "💭", score: 1 },
+          { label: "3 — Quero melhorar", emoji: "✨", score: 2 },
+          { label: "4 — Estou pronto(a) para agir", emoji: "🚀", score: 3 },
+          { label: "5 — Quero me comprometer de verdade", emoji: "🔥", score: 3 }
+        ]
+      }
+    ];
+
+    const RESULT_PROFILES = [
+      {
+        id: 1,
+        title: "Seu próximo passo é criar uma base simples e possível",
+        text: "Suas respostas indicam que pequenas ações consistentes podem ajudar você a organizar melhor sua rotina.",
+        priorities: [
+          "Recomeçar com metas simples",
+          "Criar constância sem radicalismo",
+          "Organizar hábitos do dia a dia"
+        ]
+      },
+      {
+        id: 2,
+        title: "Você já começou — agora é hora de ganhar consistência",
+        text: "Você tem bons sinais na sua rotina, e um plano mais organizado pode ajudar a manter o ritmo.",
+        priorities: [
+          "Melhorar a organização diária",
+          "Ter mais previsibilidade",
+          "Manter hábitos com leveza"
+        ]
+      },
+      {
+        id: 3,
+        title: "Você já tem uma boa base para evoluir sua rotina",
+        text: "Suas respostas mostram disposição para aprofundar hábitos saudáveis e criar uma rotina ainda mais equilibrada.",
+        priorities: [
+          "Refinar hábitos existentes",
+          "Melhorar a consistência",
+          "Evoluir com foco e planejamento"
+        ]
+      }
+    ];
+  </script>
+<!-- END: QuizDataScript -->
+<!-- BEGIN: QuizControllerScript -->
+<script data-purpose="quiz-state-controller">
+    (function () {
+      const screenQuestion = document.getElementById('screen-question');
+      const screenIntro = document.getElementById('screen-intro');
+      const screenAnalysis = document.getElementById('screen-analysis');
+      const screenResult = document.getElementById('screen-result');
+
+      const btnStartQuiz = document.getElementById('btn-start-quiz');
+      const btnBack = document.getElementById('btn-back');
+      const stepLabel = document.getElementById('question-step-label');
+      const progressBar = document.getElementById('quiz-progress-bar');
+      const questionContent = document.getElementById('question-content');
+      const questionTitle = document.getElementById('question-title');
+      const questionOptions = document.getElementById('question-options');
+
+      const analysisStatusText = document.getElementById('analysis-status-text');
+      const analysisProgressBar = document.getElementById('analysis-progress-bar');
+
+      const resultTitle = document.getElementById('result-title');
+      const resultText = document.getElementById('result-text');
+      const resultPriorities = document.getElementById('result-priorities');
+
+      let currentQuestionIndex = 0;
+      const answers = new Array(QUIZ_QUESTIONS.length).fill(null);
+      let isTransitioning = false;
+
+      function switchScreen(hideEl, showEl, displayType = 'flex') {
+        hideEl.classList.remove('screen-fade-in');
+        hideEl.classList.add('screen-fade-out');
+
+        setTimeout(() => {
+          hideEl.classList.add('hidden');
+          hideEl.classList.remove('screen-fade-out');
+
+          showEl.classList.remove('hidden');
+          if (displayType === 'flex') {
+            showEl.classList.add('flex');
+          }
+          showEl.classList.add('screen-fade-in');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 200);
+      }
+
+      function renderQuestion(index) {
+        const data = QUIZ_QUESTIONS[index];
+        const stepNumber = index + 1;
+        const progressPercent = (stepNumber / QUIZ_QUESTIONS.length) * 100;
+
+        stepLabel.textContent = `Etapa ${stepNumber} de ${QUIZ_QUESTIONS.length}`;
+        progressBar.style.width = `${progressPercent}%`;
+
+        // Show Back button from question 2 onwards (index > 0)
+        if (index > 0) {
+          btnBack.classList.remove('invisible');
+        } else {
+          btnBack.classList.add('invisible');
+        }
+
+        questionTitle.textContent = data.question;
+        questionOptions.innerHTML = '';
+
+        data.options.forEach((option, optIndex) => {
+          const isSelected = answers[index] === optIndex;
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.setAttribute('role', 'radio');
+          button.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+
+          button.className = [
+            'w-full text-left rounded-2xl border-2 px-5 py-4 text-base font-semibold transition-all duration-150 flex items-center justify-between gap-3 active:scale-[0.99]',
+            isSelected
+              ? 'border-forest bg-forest/5 text-forest shadow-sm'
+              : 'border-slate-200 bg-white text-slate-800 hover:border-forest/40 hover:bg-slate-50'
+          ].join(' ');
+
+          const labelSpan = document.createElement('span');
+          labelSpan.className = 'flex items-center gap-2.5';
+          if (option.emoji) {
+            labelSpan.innerHTML = `<span>${option.emoji}</span> <span>${option.label}</span>`;
+          } else {
+            labelSpan.textContent = option.label;
+          }
+
+          const indicator = document.createElement('span');
+          indicator.className = [
+            'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors',
+            isSelected ? 'border-forest bg-forest text-white' : 'border-slate-300'
+          ].join(' ');
+
+          if (isSelected) {
+            indicator.innerHTML = '<svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+          }
+
+          button.appendChild(labelSpan);
+          button.appendChild(indicator);
+
+          button.addEventListener('click', () => handleOptionSelect(index, optIndex, button));
+          questionOptions.appendChild(button);
+        });
+      }
+
+      function handleOptionSelect(qIndex, optIndex, buttonEl) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+
+        answers[qIndex] = optIndex;
+
+        // Highlight selected card
+        const allButtons = questionOptions.querySelectorAll('button');
+        allButtons.forEach((btn) => {
+          btn.classList.remove('border-forest', 'bg-forest/5', 'text-forest', 'shadow-sm');
+          btn.classList.add('border-slate-200', 'bg-white', 'text-slate-800');
+          const ind = btn.querySelector('span:last-child');
+          ind.className = 'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-slate-300 transition-colors';
+          ind.innerHTML = '';
+        });
+
+        buttonEl.classList.remove('border-slate-200', 'bg-white', 'text-slate-800');
+        buttonEl.classList.add('border-forest', 'bg-forest/5', 'text-forest', 'shadow-sm');
+        const selectedInd = buttonEl.querySelector('span:last-child');
+        selectedInd.className = 'flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 border-forest bg-forest text-white transition-colors';
+        selectedInd.innerHTML = '<svg class="h-3 w-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>';
+
+        setTimeout(() => {
+          if (currentQuestionIndex < QUIZ_QUESTIONS.length - 1) {
+            questionContent.classList.add('screen-fade-out');
+            setTimeout(() => {
+              currentQuestionIndex++;
+              renderQuestion(currentQuestionIndex);
+              questionContent.classList.remove('screen-fade-out');
+              questionContent.classList.add('screen-fade-in');
+              isTransitioning = false;
+            }, 180);
+          } else {
+            startAnalysisScreen();
+            isTransitioning = false;
+          }
+        }, 240);
+      }
+
+      function startAnalysisScreen() {
+        switchScreen(screenQuestion, screenAnalysis, 'flex');
+
+        const messages = [
+          "Analisando suas respostas…",
+          "Identificando seu principal ponto de atenção…",
+          "Preparando sua recomendação personalizada…"
+        ];
+
+        analysisStatusText.textContent = messages[0];
+        analysisProgressBar.style.width = '0%';
+
+        setTimeout(() => {
+          analysisProgressBar.style.width = '100%';
+        }, 200);
+
+        setTimeout(() => {
+          analysisStatusText.textContent = messages[1];
+        }, 900);
+
+        setTimeout(() => {
+          analysisStatusText.textContent = messages[2];
+        }, 1750);
+
+        setTimeout(() => {
+          renderResult();
+          switchScreen(screenAnalysis, screenResult, 'flex');
+        }, 2600);
+      }
+
+      function calculateProfile() {
+        let totalScore = 0;
+        answers.forEach((optIdx, qIdx) => {
+          if (optIdx !== null && QUIZ_QUESTIONS[qIdx].options[optIdx]) {
+            totalScore += QUIZ_QUESTIONS[qIdx].options[optIdx].score;
+          }
+        });
+
+        // Score range: min 11, max 28
+        if (totalScore <= 17) {
+          return RESULT_PROFILES[0];
+        } else if (totalScore <= 23) {
+          return RESULT_PROFILES[1];
+        } else {
+          return RESULT_PROFILES[2];
+        }
+      }
+
+      function renderResult() {
+        const profile = calculateProfile();
+        resultTitle.textContent = profile.title;
+        resultText.textContent = profile.text;
+
+        resultPriorities.innerHTML = '';
+        profile.priorities.forEach((item) => {
+          const li = document.createElement('li');
+          li.className = 'flex items-center gap-2.5 text-sm font-semibold text-slate-800';
+          li.innerHTML = `
+            <span class="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-forest text-xs text-white">✓</span>
+            <span>${item}</span>
+          `;
+          resultPriorities.appendChild(li);
+        });
+      }
+
+      btnBack.addEventListener('click', () => {
+        if (isTransitioning || currentQuestionIndex === 0) return;
+        isTransitioning = true;
+        questionContent.classList.add('screen-fade-out');
+        setTimeout(() => {
+          currentQuestionIndex--;
+          renderQuestion(currentQuestionIndex);
+          questionContent.classList.remove('screen-fade-out');
+          questionContent.classList.add('screen-fade-in');
+          isTransitioning = false;
+        }, 180);
+      });
+
+      btnStartQuiz.addEventListener('click', () => {
+        switchScreen(screenIntro, screenQuestion, 'flex');
+        renderQuestion(currentQuestionIndex);
+      });
+
+      // Bind static initial options on Question 1 for immediate interactivity
+      const initialButtons = questionOptions.querySelectorAll('button');
+      initialButtons.forEach((btn, optIdx) => {
+        btn.addEventListener('click', () => handleOptionSelect(0, optIdx, btn));
+      });
+    })();
+  </script>
+<!-- END: QuizControllerScript -->
+
+
+</body></html>
